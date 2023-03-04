@@ -10,7 +10,7 @@ If you want to know in detail about the detailed explanation of how to develop y
 </p>
 
 <!-- files -->
-## Files
+## 1. Files
 * **decision_tree**: Contains the files to build the decision_tree component as well as the Dockerfile used to generate the component image.
 * **logistic_regression**: Contains the files to build the logistic_regression component as well as the Dockerfile used to generate the component image.
 * **download_data**: Contains the files to build the download_data component as well as the Dockerfile used to generate the component image.
