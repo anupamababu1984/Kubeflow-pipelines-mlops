@@ -19,8 +19,7 @@ If you want to know in detail about the detailed explanation of how to develop y
 
 <!-- how-to-use -->
 ## How to use
-* It is recommended to have previously installed ``kfp`` as well as configured kubeflow on top of kubernets or a minimal version such as ``minikube``.
-* All the images are accesible in Docker Hub: https://hub.docker.com/repository/docker/fernandolpz/only-tests
+* It is recommended to have previously installed ``kfp`` as well as configured kubeflow on top of kubernets or a minimal version such as ``minikube`` or AKS or EKS.
 
 <!-- license -->
 ## License
