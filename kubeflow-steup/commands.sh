@@ -2,7 +2,10 @@
 KUBERNETES_VERSION="1.22/stable"
 CHANNEL="1.6/stable"
 
-for snap in juju juju-wait charmcraft; do sudo snap install $snap --classic; done
+sudo snap install juju --channel=2.9/stable --classic
+sudo snap install juju-wait --classic
+sudo snap install charmcraft --classic
+
 sudo snap install microk8s --classic --channel=${KUBERNETES_VERSION}
 sudo snap refresh charmcraft --channel latest/candidate
 sudo usermod -a -G microk8s ubuntu
