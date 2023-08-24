@@ -2,7 +2,6 @@
 KUBERNETES_VERSION="1.22/stable"
 CHANNEL="1.6/stable"
 
-# https://discourse.charmhub.io/t/the-microk8s-cloud-and-juju/1194/14 error fix for previous version issue
 sudo snap install juju --channel=2.9/stable --classic
 sudo snap install juju-wait --classic
 sudo snap install charmcraft --classic
