@@ -2,8 +2,9 @@
 
 # Deploy Kubeflow on AWS EKS
 
-## Prerequisites
-* **Docker**
+## Prerequisites:
+
+## Docker
 Create a Ubuntu environment using Docker. 
 
 * Pull the latest version of the Ubuntu image of your choice.
