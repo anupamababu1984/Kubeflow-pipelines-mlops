@@ -72,27 +72,94 @@ export AWS_PROFILE=kubeflow
 
 Once your configuration is complete, run `aws sts get-caller-identity` to verify that AWS CLI has access to your IAM credentials.
 
+## Cluster setup
+
+Change this according to your usecase
+* **Cluster Name**: kubeflow-srvr
+* **Region**: us-east-1
+
+`eksctl create cluster --name kubeflow-srvr --region us-east-1 --ssh-access --ssh-public-key=kubeflow-server --node-type=t2.2xlarge --nodes=2 --node-volume-size=100 --node-volume-type=gp2 --version=1.23`
+
+EBS CSI setup link here. Create IAM OpenID connect provider:
+
+`eksctl utils associate-iam-oidc-provider --cluster kubeflow-srvr --approve`
+
+Create the Amazon EBS CSI driver IAM role for service account
+
+```
+eksctl create iamserviceaccount \
+  --name ebs-csi-controller-sa \
+  --namespace kube-system \
+  --cluster kubeflow-srvr \
+  --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
+  --approve \
+  --role-only \
+  --role-name AmazonEKS_EBS_CSI_DriverRole
+```
+Add the Amazon EBS CSI add-on
+
+* **Chnage your AWS account ID**
+
+`eksctl create addon --name aws-ebs-csi-driver --cluster kubeflow-srvr --service-account-role-arn arn:aws:iam::[aws-account-id]:role/AmazonEKS_EBS_CSI_DriverRole --force`
+
+* (optional)Deploy sample application to check whether cluster working properls
+
+```
+git clone https://github.com/kubernetes-sigs/aws-ebs-csi-driver.git
+cd aws-ebs-csi-driver/examples/kubernetes/dynamic-provisioning/
+kubectl apply -f manifests/
+kubectl get pods --watch
+kubectl get pv
+```
+Remove sample application
+
+`kubectl delete -f manifests/`
+
+Expose your cluster & Region
+
+```
+export CLUSTER_NAME=kubeflow-srvr
+export CLUSTER_REGION=us-east-1
+```
+
+Now go directory `kubeflow-manifests` in you root 
+`cd kubeflow-manifests`
+
+## Vanilla Installation for Kubeflow on EKS
+
+**Install with a single command**
+kustomize method 
+
+`make deploy-kubeflow INSTALLATION_OPTION=kustomize DEPLOYMENT_OPTION=vanilla`
+
+**Connect to your Kubeflow cluster**
+
+```
+kubectl get pods -n cert-manager
+kubectl get pods -n istio-system
+kubectl get pods -n auth
+kubectl get pods -n knative-eventing
+kubectl get pods -n knative-serving
+kubectl get pods -n kubeflow
+kubectl get pods -n kubeflow-user-example-com
+
+```
+
+**Connect to your Kubeflow Dashboard**
+You can now start experimenting and running your end-to-end ML workflows with Kubeflow on AWS!
+
+For information on connecting to your Kubeflow dashboard depending on your deployment environment, see Connect to your Kubeflow Dashboard.
+
+## Using Docker to connect 
+Run the following command:
+
+`make port-forward IP_ADDRESS=0.0.0.0`
+
+You can then open the browser and go to http://localhost:8080/.
+
+Perfect now you can access your Kubeflow dashboard
 
 
-
-
-If you want to know in detail about the detailed explanation of how to develop your first kubeflow pipeline, I recommend you take a look at the article: <a href="Kubeflow Pipelines: How to Build your First Kubeflow Pipeline from Scratch"> *Kubeflow Pipelines: How to Build your First Kubeflow Pipeline from Scratch*</a>
-
-<p align="center">
-<img src='img/kubeflow.jpg'>
-</p>
-
-<!-- files -->
-## Files
-* **decision_tree**: Contains the files to build the decision_tree component as well as the Dockerfile used to generate the component image.
-* **logistic_regression**: Contains the files to build the logistic_regression component as well as the Dockerfile used to generate the component image.
-* **download_data**: Contains the files to build the download_data component as well as the Dockerfile used to generate the component image.
-* **pipeline.py**: Contains the definition of the pipeline, which when executed generates the ``FirstPipeline.yaml`` file.
-
-
-<!-- how-to-use -->
-## How to use
-* It is recommended to have previously installed ``kfp`` as well as configured kubeflow on top of kubernets or a minimal version such as ``minikube`` or AKS or EKS.
 
 <!-- license -->
 ## License
