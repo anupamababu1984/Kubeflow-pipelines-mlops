@@ -51,6 +51,27 @@ The `make` command above installs the following tools:
 * terraform - An infrastructure as code tool that lets you develop cloud and on-prem resources.
 * helm - A package manager for Kubernetes
 
+## Configure AWS Credentials and Region for Deployment 
+To access AWS services, you need an AWS account and setup IAM credentials. Follow AWS CLI Configure Quickstart documentation to setup your IAM credentials.
+
+Your IAM user/role needs the necessary privileges to create and manage your cluster and dependencies. You might want to grant `Administrative Privileges` as it will require access to multiple services.
+
+Run the following command to configure AWS CLI:
+
+```
+aws configure --profile=kubeflow
+# AWS Access Key ID [None]: <enter access key id>
+# AWS Secret Access Key [None]: <enter secret access key>
+# Default region name [None]: <AWS region>
+# Default output format [None]: json
+
+# Set the AWS_PROFILE variable with the profile above
+export AWS_PROFILE=kubeflow
+
+```
+
+Once your configuration is complete, run `aws sts get-caller-identity` to verify that AWS CLI has access to your IAM credentials.
+
 
 
 
