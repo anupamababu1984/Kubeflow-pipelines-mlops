@@ -27,6 +27,30 @@ git clone https://github.com/awslabs/kubeflow-manifests.git && cd kubeflow-manif
 git checkout ${AWS_RELEASE_VERSION}
 git clone --branch ${KUBEFLOW_RELEASE_VERSION} https://github.com/kubeflow/manifests.git upstream
 ```
+## Install necessary tools 
+Install the necessary tools with the following command:
+
+``make install-tools``
+
+```
+#NOTE: If you have other versions of python installed 
+#then make sure the default is set to python3.8
+alias python=python3.8
+```
+
+The `make` command above installs the following tools:
+
+* AWS CLI - A command line tool for interacting with AWS services.
+* eksctl - A command line tool for working with EKS clusters.
+* kubectl - A command line tool for working with Kubernetes clusters.
+* yq - A command line tool for YAML processing. (For Linux environments, use the wget plain binary installation)
+* jq - A command line tool for processing JSON.
+* kustomize version 5.0.1 - A command line tool to customize Kubernetes objects through a kustomization file.
+* python 3.8+ - A programming language used for automated installation scripts.
+* pip - A package installer for python.
+* terraform - An infrastructure as code tool that lets you develop cloud and on-prem resources.
+* helm - A package manager for Kubernetes
+
 
 
 
