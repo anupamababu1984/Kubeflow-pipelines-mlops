@@ -4,13 +4,15 @@
 
 ## Prerequisites
 * **Docker**
-Create a Ubuntu environment using Docker. Pull the latest version of the Ubuntu image of your choice.
+Create a Ubuntu environment using Docker. 
+
+* Pull the latest version of the Ubuntu image of your choice.
 ``docker pull ubuntu:18.04``
-Connect to localhost from your container:
+* Connect to localhost from your container:
 ``docker container run -it -p 127.0.0.1:8080:8080 ubuntu:18.04``
-Download the latest package information:
+* Download the latest package information:
 ``apt update``
-Install the necessary tools:
+* Install the necessary tools:
 ``apt install git curl unzip tar make sudo vim wget -y``
 
 ## Clone repository
